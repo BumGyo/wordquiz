@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -99,7 +101,7 @@ int get_command() {
 		printf(">");
 		res = scanf("%d", &cmd);
 
-		if (res != 1 || cmd > 4) 
+		if (res != 1 || cmd > 4 || cmd < 1) 
 		{
 			fprintf(stderr, "Error: Invalid command. Please enter a number between 1 ~ 4.\n\n");
 			while (getchar() != '\n'); // Remove invalid input
