@@ -13,7 +13,7 @@ typedef
 		C_TEST,
 		C_EXIT,
 	}
-	command_t ;
+	command_t;
 
 // strndup 함수 구현
 char* strndup(const char* s, size_t n) {
@@ -21,7 +21,7 @@ char* strndup(const char* s, size_t n) {
 	size_t len = strnlen(s, n);
 	result = (char*)malloc(len + 1);
 	if (result == NULL) {
-		fprintf(stderr, "Memory Allocation Fail\n");
+		fprintf(stderr, "Error: Memory Allocation Fail\n\n");
 		exit(EXIT_FAILURE);	// End program if allocation fails
 	}
 	memcpy(result, s, len);
@@ -62,7 +62,7 @@ char * read_a_line (FILE * fp)
 				char* new_s = realloc(s, s_len + end - curr + 1);
 				if (new_s == NULL)
 				{
-					fprintf(stderr, "Memory Allocation Fail\n");
+					fprintf(stderr, "Error: Memory Allocation Fail\n\n");
 					free(s);	// free existing allocated memory
 					exit(EXIT_FAILURE);	// End program if allocation fails
 				}
@@ -91,11 +91,25 @@ void print_menu() {
 }
 
 int get_command() {
-	int cmd ;
+	int cmd;
+	int res;
 
-	printf(">") ;
-	scanf("%d", &cmd) ;
-	return cmd ;
+	while(1) 
+	{
+		printf(">");
+		res = scanf("%d", &cmd);
+
+		if (res != 1 || cmd > 4) 
+		{
+			fprintf(stderr, "Error: Invalid command. Please enter a number between 1 ~ 4.\n\n");
+			while (getchar() != '\n'); // Remove invalid input
+			print_menu();
+			continue; // return to the begining of the loop
+		}
+		break;	// End the loop if it is a valid input
+	}
+
+	return cmd;
 }
 
 void list_wordbooks ()
@@ -104,7 +118,8 @@ void list_wordbooks ()
 	HANDLE hFind = FindFirstFile("wordbooks\\*", &findFileData);
 
 	if (hFind == INVALID_HANDLE_VALUE) {
-		printf("No wordbooks found.\n");
+		printf("\nNo wordbooks found.\n");
+		fprintf(stderr, "Error: Unable to access the worbks directory.\n\n");
 		return;
 	}
 
@@ -136,7 +151,8 @@ void show_words ()
 	FILE * fp = fopen(filepath, "r") ;
 
 	if (!fp) {
-		printf("Failed to open wordbook %s\n", wordbook);
+		printf("\nFailed to open wordbook %s\n", wordbook);
+		fprintf(stderr, "Error: Failed to open file, %s\n\n", filepath);
 		return;
 	}
 
@@ -170,7 +186,8 @@ void run_test ()
 	FILE * fp = fopen(filepath, "r") ;
 
 	if (!fp) {
-		printf("Failed to open wordbook %s\n", wordbook);
+		printf("\nFailed to open wordbook %s\n", wordbook);
+		fprintf(stderr, "Error: Failed to open file, %s.\n\n", filepath);
 		return;
 	}
 
