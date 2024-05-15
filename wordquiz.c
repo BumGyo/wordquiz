@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dirent.h>
+#include <windows.h>
+#include <tchar.h>
 #include <ctype.h>
-
 
 typedef 
 	enum {
@@ -15,6 +15,17 @@ typedef
 	}
 	command_t ;
 
+// strndup 함수 구현
+char* strndup(const char* s, size_t n) {
+	char* result;
+	size_t len = strnlen(s, n);
+	result = (char*)malloc(len + 1);
+	if (result) {
+		memcpy(result, s, len);
+		result[len] = '\0';
+	}
+	return result;
+}
 
 char * read_a_line (FILE * fp)
 {
@@ -62,8 +73,6 @@ char * read_a_line (FILE * fp)
 	return s ;
 }
 
-
-
 void print_menu() {
 
 	printf("1. List all wordbooks\n") ;
@@ -82,20 +91,24 @@ int get_command() {
 
 void list_wordbooks ()
 {
+	WIN32_FIND_DATA findFileData;
+	HANDLE hFind = FindFirstFile("wordbooks\\*", &findFileData);
 
-	DIR * d = opendir("wordbooks") ;
-	
-	printf("\n  ----\n") ;
-
-	struct dirent * wb ;
-	while ((wb = readdir(d)) != NULL) {
-		if (strcmp(wb->d_name, ".") != 0 && strcmp(wb->d_name, "..") !=0) {
-			printf("  %s\n", wb->d_name) ;
-		}
+	if (hFind == INVALID_HANDLE_VALUE) {
+		printf("No wordbooks found.\n");
+		return;
 	}
-	closedir(d) ;
 
-	printf("  ----\n") ;
+	printf("\n  ----\n");
+	do {
+		const char* name = findFileData.cFileName;
+		if (strcmp(name, ".") != 0 && strcmp(name, "..") != 0) {
+			printf("  %s\n", name);
+		}
+	} while (FindNextFile(hFind, &findFileData) != 0);
+	FindClose(hFind);
+
+	printf("  ----\n");
 }
 
 void show_words ()
@@ -109,9 +122,14 @@ void show_words ()
 	printf(">") ;
 	scanf("%s", wordbook) ;
 
-	sprintf(filepath, "wordbooks/%s", wordbook) ;
+	sprintf(filepath, "wordbooks\\%s", wordbook) ;
 
 	FILE * fp = fopen(filepath, "r") ;
+
+	if (!fp) {
+		printf("Failed to open wordbook %s\n", wordbook);
+		return;
+	}
 
 	printf("\n  -----\n") ;
 	char * line ;
@@ -129,7 +147,6 @@ void show_words ()
 	fclose(fp) ;
 }
 
-
 void run_test ()
 {
 	char wordbook[128] ;
@@ -139,9 +156,14 @@ void run_test ()
 	printf(">") ;
 	scanf("%s", wordbook) ;
 
-	sprintf(filepath, "wordbooks/%s", wordbook) ;
+	sprintf(filepath, "wordbooks\\%s", wordbook) ;
 
 	FILE * fp = fopen(filepath, "r") ;
+
+	if (!fp) {
+		printf("Failed to open wordbook %s\n", wordbook);
+		return;
+	}
 
 	printf("\n-----\n") ;
 
@@ -179,10 +201,8 @@ void run_test ()
 	fclose(fp) ;
 }
 
-
 int main ()
 {
-	
 	printf(" *** Word Quiz *** \n\n") ;
 
 	int cmd ;
@@ -212,7 +232,6 @@ int main ()
 		}
 	}
 	while (cmd != C_EXIT) ;
-
 
 	return EXIT_SUCCESS ;
 }
