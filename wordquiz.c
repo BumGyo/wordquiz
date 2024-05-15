@@ -1,5 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -199,27 +197,75 @@ void run_test ()
 	int n_correct = 0 ; 
 
 	char * line ;
-	while (line = read_a_line(fp)) {
-		char * word = strtok(line, "\"") ;
-		strtok(NULL, "\"") ;
-		char * meaning = strtok(NULL, "\"") ;
+	printf("Which type of test do you want to take?\n");
+	printf("1. Word -> Meaning\n");
+	printf("2. Meaning -> Word\n");
+	printf(">");
 
-		printf("Q. %s\n", meaning) ;
-		printf("?  ") ;
+	int select = 0;
 
-		char answer[128] ;
-		scanf("%s", answer) ;
+	scanf("%d", &select);
+	if (select == 1)
+		while (line = read_a_line(fp)) {
+			char* word = strtok(line, "\"");
+			strtok(NULL, "\"");
+			char* meaning = strtok(NULL, "\"");
 
-		if (strcmp(answer, word) == 0) {
-			printf("- correct\n") ;
-			n_correct++ ;
+			printf("Q. %s\n", meaning);
+			printf("?  ");
+
+			char answer[128];
+			scanf("%s", answer);
+
+			if (strcmp(answer, word) == 0) {
+				printf("- correct\n");
+				n_correct++;
+			}
+			else {
+				printf("- wrong: %s\n", word);
+			}
+
+			n_questions++;
+			free(line);
 		}
-		else {
-			printf("- wrong: %s\n", word) ;
-		}
+	else if (select == 2)
+	{
+		getchar();
+		while (line = read_a_line(fp)) {
+			// Remove the newline character
+			char* word = strtok(line, "\"");
+			strtok(NULL, "\"");
+			char* meaning = strtok(NULL, "\"");
 
-		n_questions++ ;
-		free(line) ;
+			printf("Q. %s\n", word);
+			printf("?  ");
+
+			char answer[128];
+			fgets(answer, sizeof(answer), stdin);
+
+			// Remove the newline character
+			size_t len = strlen(answer);
+			if (len > 0 && answer[len - 1] == '\n') {
+				answer[len - 1] = '\0';
+			}
+
+			if (strcmp(answer, meaning) == 0) {
+				printf("- correct\n");
+				n_correct++;
+			}
+			else {
+				printf("- wrong: %s\n", meaning);
+			}
+
+			n_questions++;
+			free(line);
+		}
+	}
+	else {
+		while (getchar() != '\n');
+		printf("Error: Invalid Input\n\n");
+		fclose(fp);
+		return;
 	}
 
 	printf("(%d/%d)\n", n_correct, n_questions) ;
