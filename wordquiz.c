@@ -20,10 +20,12 @@ char* strndup(const char* s, size_t n) {
 	char* result;
 	size_t len = strnlen(s, n);
 	result = (char*)malloc(len + 1);
-	if (result) {
-		memcpy(result, s, len);
-		result[len] = '\0';
+	if (result == NULL) {
+		fprintf(stderr, "Memory Allocation Fail\n");
+		exit(EXIT_FAILURE);	// End program if allocation fails
 	}
+	memcpy(result, s, len);
+	result[len] = '\0';
 	return result;
 }
 
@@ -57,8 +59,15 @@ char * read_a_line (FILE * fp)
 				s_len = end - curr ;
 			}
 			else {
-				s = realloc(s, s_len + end - curr + 1) ;
-				s = strncat(s, buf + curr, end - curr) ;
+				char* new_s = realloc(s, s_len + end - curr + 1);
+				if (new_s == NULL)
+				{
+					fprintf(stderr, "Memory Allocation Fail\n");
+					free(s);	// free existing allocated memory
+					exit(EXIT_FAILURE);	// End program if allocation fails
+				}
+				s = new_s;
+				strncat(s, buf + curr, end - curr) ;
 				s_len = s_len + end - curr ;
 			}
 		}
