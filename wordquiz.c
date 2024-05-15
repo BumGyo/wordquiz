@@ -15,7 +15,7 @@ typedef
 	}
 	command_t ;
 
-// strndup ÇÔ¼ö ±¸Çö
+// strndup í•¨ìˆ˜ êµ¬í˜„
 char* strndup(const char* s, size_t n) {
 	char* result;
 	size_t len = strnlen(s, n);
