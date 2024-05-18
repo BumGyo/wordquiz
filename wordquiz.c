@@ -99,14 +99,11 @@ int get_command() {
 		printf(">");
 		res = scanf("%d", &cmd);
 
-		if (res != 1 || cmd > 4 || cmd < 1) 
-		{
-			fprintf(stderr, "Error: Invalid command. Please enter a number between 1 ~ 4.\n\n");
-			while (getchar() != '\n'); // Remove invalid input
-			print_menu();
-			continue; // return to the begining of the loop
+		if (cmd < C_ZERO || cmd > C_EXIT) {
+			printf("Invalid command\n") ;
+			scanf("%*c", cmd) ; // Clear the input buffer
+			return get_command() ;
 		}
-		break;	// End the loop if it is a valid input
 	}
 
 	return cmd;
