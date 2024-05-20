@@ -146,9 +146,9 @@ void show_words ()
 
 	printf("Type in the name of the wordbook?\n") ;
 	printf(">") ;
-	scanf("%s", wordbook) ;
+	scanf("%127s", wordbook);
 
-	sprintf(filepath, "wordbooks\\%s", wordbook) ;
+	snprintf(filepath, sizeof(filepath), "wordbooks\\%s", wordbook);
 
 	FILE * fp = fopen(filepath, "r") ;
 
@@ -181,9 +181,9 @@ void run_test ()
 
 	printf("Type in the name of the wordbook?\n") ;
 	printf(">") ;
-	scanf("%s", wordbook) ;
+	scanf("%127s", wordbook);
 
-	sprintf(filepath, "wordbooks\\%s", wordbook) ;
+	snprintf(filepath, sizeof(filepath), "wordbooks\\%s", wordbook);
 
 	FILE * fp = fopen(filepath, "r") ;
 
@@ -208,7 +208,7 @@ void run_test ()
 		printf("?  ") ;
 
 		char answer[128] ;
-		scanf("%s", answer) ;
+		scanf("%s127", answer) ;
 
 		if (strcmp(answer, word) == 0) {
 			printf("- correct\n") ;
