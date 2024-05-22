@@ -137,142 +137,148 @@ void list_wordbooks ()
 
 void show_words ()
 {
-	char wordbook[128] ;
-	char filepath[256] ;
+    char wordbook[128] ;
+    char filepath[256] ;
+    FILE * fp = NULL;
 
-	list_wordbooks() ;
+    do {
+        list_wordbooks() ;
 
-	printf("Type in the name of the wordbook?\n") ;
-	printf(">") ;
-	scanf("%127s", wordbook);
+        printf("Type in the name of the wordbook?\n") ;
+        printf(">") ;
+        scanf("%127s", wordbook);
 
-	snprintf(filepath, sizeof(filepath), "wordbooks\\%s", wordbook);
+        snprintf(filepath, sizeof(filepath), "wordbooks\\%s", wordbook);
 
-	FILE * fp = fopen(filepath, "r") ;
+        fp = fopen(filepath, "r") ;
 
-	if (!fp) {
-		printf("\nFailed to open wordbook %s\n", wordbook);
-		fprintf(stderr, "Error: Failed to open file, %s\n\n", filepath);
-		return;
-	}
+        if (!fp) {
+            printf("\nFailed to open wordbook %s\n", wordbook);
+            fprintf(stderr, "Error: Failed to open file, %s\n\n", filepath);
+        }
+    } while (!fp);
 
-	printf("\n  -----\n") ;
-	char * line ;
-	while (line = read_a_line(fp)) {
-		char * word = strtok(line, "\"") ;
-		strtok(NULL, "\"") ;
-		char * meaning = strtok(NULL, "\"") ;
+    printf("\n  -----\n") ;
+    char * line ;
+    while (line = read_a_line(fp)) {
+        char * word = strtok(line, "\"") ;
+        strtok(NULL, "\"") ;
+        char * meaning = strtok(NULL, "\"") ;
 
-		printf("  %s : %s\n", word, meaning) ;
+        printf("  %s : %s\n", word, meaning) ;
 
-		free(line) ;
-	}
-	printf("  -----\n\n") ;
+        free(line) ;
+    }
+    printf("  -----\n\n") ;
 
-	fclose(fp) ;
+    fclose(fp) ;
 }
 
 void run_test ()
 {
-	char wordbook[128] ;
-	char filepath[256] ;
+    char wordbook[128] ;
+    char filepath[256] ;
+    FILE * fp = NULL;
 
-	printf("Type in the name of the wordbook?\n") ;
-	printf(">") ;
-	scanf("%127s", wordbook);
+    do {
+        list_wordbooks() ;
 
-	snprintf(filepath, sizeof(filepath), "wordbooks\\%s", wordbook);
+        printf("Type in the name of the wordbook?\n") ;
+        printf(">") ;
+        scanf("%127s", wordbook);
 
-	FILE * fp = fopen(filepath, "r") ;
+        snprintf(filepath, sizeof(filepath), "wordbooks\\%s", wordbook);
 
-	if (!fp) {
-		printf("\nFailed to open wordbook %s\n", wordbook);
-		fprintf(stderr, "Error: Failed to open file, %s.\n\n", filepath);
-		return;
-	}
+        fp = fopen(filepath, "r") ;
 
-	printf("\n-----\n") ;
+        if (!fp) {
+            printf("\nFailed to open wordbook %s\n", wordbook);
+            fprintf(stderr, "Error: Failed to open file, %s.\n\n", filepath);
+        }
+    } while (!fp);
 
-	int n_questions = 0 ;
-	int n_correct = 0 ; 
+    printf("\n-----\n") ;
 
-	char * line ;
-	printf("Which type of test do you want to take?\n");
-	printf("1. Word -> Meaning\n");
-	printf("2. Meaning -> Word\n");
-	printf(">");
+    int n_questions = 0 ;
+    int n_correct = 0 ; 
 
-	int select = 0;
+    char * line ;
+    printf("Which type of test do you want to take?\n");
+    printf("1. Word -> Meaning\n");
+    printf("2. Meaning -> Word\n");
+    printf(">");
 
-	scanf("%d", &select);
-	if (select == 1)
-		while (line = read_a_line(fp)) {
-			char* word = strtok(line, "\"");
-			strtok(NULL, "\"");
-			char* meaning = strtok(NULL, "\"");
+    int select = 0;
 
-			printf("Q. %s\n", meaning);
-			printf("?  ");
+    scanf("%d", &select);
+    if (select == 1)
+        while (line = read_a_line(fp)) {
+            char* word = strtok(line, "\"");
+            strtok(NULL, "\"");
+            char* meaning = strtok(NULL, "\"");
 
-		char answer[128] ;
-		scanf("%127s", answer) ;
+            printf("Q. %s\n", meaning);
+            printf("?  ");
 
-			if (strcmp(answer, word) == 0) {
-				printf("- correct\n");
-				n_correct++;
-			}
-			else {
-				printf("- wrong: %s\n", word);
-			}
+            char answer[128] ;
+            scanf("%127s", answer) ;
 
-			n_questions++;
-			free(line);
-		}
-	else if (select == 2)
-	{
-		getchar();
-		while (line = read_a_line(fp)) {
-			// Remove the newline character
-			char* word = strtok(line, "\"");
-			strtok(NULL, "\"");
-			char* meaning = strtok(NULL, "\"");
+            if (strcmp(answer, word) == 0) {
+                printf("- correct\n");
+                n_correct++;
+            }
+            else {
+                printf("- wrong: %s\n", word);
+            }
 
-			printf("Q. %s\n", word);
-			printf("?  ");
+            n_questions++;
+            free(line);
+        }
+    else if (select == 2)
+    {
+        getchar();
+        while (line = read_a_line(fp)) {
+            // Remove the newline character
+            char* word = strtok(line, "\"");
+            strtok(NULL, "\"");
+            char* meaning = strtok(NULL, "\"");
 
-			char answer[128];
-			fgets(answer, sizeof(answer), stdin);
+            printf("Q. %s\n", word);
+            printf("?  ");
 
-			// Remove the newline character
-			size_t len = strlen(answer);
-			if (len > 0 && answer[len - 1] == '\n') {
-				answer[len - 1] = '\0';
-			}
+            char answer[128];
+            fgets(answer, sizeof(answer), stdin);
 
-			if (strcmp(answer, meaning) == 0) {
-				printf("- correct\n");
-				n_correct++;
-			}
-			else {
-				printf("- wrong: %s\n", meaning);
-			}
+            // Remove the newline character
+            size_t len = strlen(answer);
+            if (len > 0 && answer[len - 1] == '\n') {
+                answer[len - 1] = '\0';
+            }
 
-			n_questions++;
-			free(line);
-		}
-	}
-	else {
-		while (getchar() != '\n');
-		printf("Error: Invalid Input\n\n");
-		fclose(fp);
-		return;
-	}
+            if (strcmp(answer, meaning) == 0) {
+                printf("- correct\n");
+                n_correct++;
+            }
+            else {
+                printf("- wrong: %s\n", meaning);
+            }
 
-	printf("(%d/%d)\n", n_correct, n_questions) ;
+            n_questions++;
+            free(line);
+        }
+    }
+    else {
+        while (getchar() != '\n');
+        printf("Error: Invalid Input\n\n");
+        fclose(fp);
+        return;
+    }
 
-	printf("-----\n\n") ;
+    printf("(%d/%d)\n", n_correct, n_questions) ;
 
-	fclose(fp) ;
+    printf("-----\n\n") ;
+
+    fclose(fp) ;
 }
 
 int main ()
