@@ -12,8 +12,58 @@ typedef
 		C_SHOW,
 		C_TEST,
 		C_EXIT,
+		C_ADD,
+        C_ADD_WORD
 	}
 	command_t;
+
+
+void add_wordbook() {
+    char wordbook_name[256];
+    printf("Enter the name of the new wordbook: ");
+    scanf("%s", wordbook_name);
+
+    char path[300];
+    sprintf(path, "wordbooks\\%s", wordbook_name);
+
+    FILE *file = fopen(path, "w");
+    if (file == NULL) {
+        fprintf(stderr, "Error: Unable to create the wordbook.\n\n");
+        return;
+    }
+
+    printf("Wordbook '%s' has been successfully created.\n", wordbook_name);
+    fclose(file);
+}
+
+void add_word_to_wordbook() {
+	list_wordbooks() ;
+	
+    char wordbook_name[256];
+    printf("Enter the name of the wordbook to add a word: ");
+    scanf("%s", wordbook_name);
+
+    char path[300];
+    sprintf(path, "wordbooks\\%s", wordbook_name);
+
+    FILE *file = fopen(path, "a");
+    if (file == NULL) {
+        fprintf(stderr, "Error: Unable to open the wordbook.\n\n");
+        return;
+    }
+
+    char word[256], meaning[256];
+    printf("Enter the word: ");
+    scanf("%s", word);
+	fflush(stdin);
+    printf("Enter the meaning: ");
+    gets(meaning);
+
+    fprintf(file, "\"%s\" \"%s\"\n", word, meaning);
+    printf("Word '%s' has been successfully added to the wordbook '%s'.\n", word, wordbook_name);
+
+    fclose(file);
+}
 
 // strndup 함수 구현
 char* strndup(const char* s, size_t n) {
@@ -88,6 +138,8 @@ void print_menu() {
 	printf("2. Show the words in a wordbook\n") ;
 	printf("3. Test with a wordbook\n") ;
 	printf("4. Exit\n") ;
+	printf("5. Add a wordbook\n") ;
+    printf("6. Add a word to a wordbook\n") ;
 }
 
 int get_command() {
@@ -99,7 +151,7 @@ int get_command() {
 		printf(">");
 		res = scanf("%d", &cmd);
 
-		if (res != 1 || cmd > 4 || cmd < 1) 
+		if (res != 1 || cmd > 6 || cmd < 1) 
 		{
 			fprintf(stderr, "Error: Invalid command. Please enter a number between 1 ~ 4.\n\n");
 			while (getchar() != '\n'); // Remove invalid input
@@ -309,6 +361,16 @@ int main ()
 			case C_EXIT: {
 				return EXIT_SUCCESS ;
 			}
+
+			case C_ADD: {
+                add_wordbook();
+                break;
+            }
+
+            case C_ADD_WORD: {
+                add_word_to_wordbook();
+                break;
+            }
 		}
 	}
 	while (cmd != C_EXIT) ;
