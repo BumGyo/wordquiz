@@ -98,4 +98,4 @@ This project was developed for learning purposes, and it was made to make studyi
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
