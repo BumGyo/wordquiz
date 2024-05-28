@@ -81,14 +81,14 @@ This project was developed for learning purposes, and it was made to make studyi
    ```
 
 ### Screenshots
-- **Main Menu:**
-  ![메인 메뉴](screenshots/main_menu.png)
+- **Main Menu:**   
+  ![MainMenu](screenshots/main_menu.PNG)
   
-- **Quiz:**
-  ![퀴즈 문제](screenshots/quiz_question.png)
+- **Quiz:**   
+  ![Quiz](screenshots/quiz_question.PNG)
   
-- **Check the score:**
-  ![점수 확인](screenshots/check_score.png)
+- **Check the score:**   
+  ![CheckScore](screenshots/check_score.PNG)
 
 ## Credits
 
