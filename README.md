@@ -9,9 +9,7 @@ This project was developed for learning purposes, and it was made to make studyi
 ![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
 </div>
 
-## How to Install and Run the Project
-
-### Step-by-Step Instructions
+## How to Install and Run the WordQuiz
 
 1. **Clone the repository:**
    ```bash
@@ -29,39 +27,58 @@ This project was developed for learning purposes, and it was made to make studyi
    ./wordquiz
    ```
 
-## How to Use the Project
+## How to Play the WordQuiz
 
-### Instructions and Examples
-
-1. **프로그램 실행:**
+1. **Program Run:**
    ```bash
    ./wordquiz
    ```
 
-2. **메인 메뉴:**
-   프로그램을 실행하면 다음과 같은 메인 메뉴가 표시됩니다.
+2. **Main Menu:**
+   Choose a number corresponding to 1 to 4.
    ```
-   WordQuiz에 오신 것을 환영합니다!
-   1. 퀴즈 시작
-   2. 점수 확인
-   3. 종료
+   *** Word Quiz ***
+
+   1. List all wordbooks
+   2. Show the words in a wordbook
+   3. Test with a wordbook
+   4. Exit
+   >
    ```
 
-3. **퀴즈 풀기:**
-   "퀴즈 시작" 옵션을 선택하면, 프로그램은 여러 단어 문제를 제시합니다. 각 문제는 다음과 같이 표시됩니다.
+4. **List wordbooks:**
+   You can also add a Wordbook directly to the "workbooks" folder.
    ```
-   단어: ____ (힌트: 동물)
-   정답을 입력하세요: 
-   ```
-
-4. **점수 확인:**
-   "점수 확인" 옵션을 선택하면, 사용자의 현재 점수가 표시됩니다.
-   ```
-   현재 점수: 80
+   ---
+   voca1
+   voca2
+   ---
    ```
 
-5. **프로그램 종료:**
-   "종료" 옵션을 선택하면 프로그램이 종료됩니다.
+5. **Test with a wordbook:**
+   ```
+   Type in the name of the Wordbook?
+   > voca1 or other wordbook
+
+   -----
+   Which type of test do you want to take?
+   1. Word -> Meaning
+   2. Meaning -> Word
+   > 1 or 2
+   Q. deem to be
+   ? Answer
+   ```
+
+6. **Program exit:**
+   ```
+   *** Word Quiz ***
+
+   1. List all wordbooks
+   2. Show the words in a wordbook
+   3. Test with a wordbook
+   4. Exit
+   > 4
+   ```
 
 ### Screenshots
 - **Main Menu:**
@@ -77,7 +94,7 @@ This project was developed for learning purposes, and it was made to make studyi
 
 - **Team:** Group#202
 - **Contributors:** Wien0128, JeonYeongwoo, BumGyo, OPCIO0568
-- **Organization:** Chungbuk National University
+- **Organization:** Department of Software, Chungbuk National University
 
 ## License
 
