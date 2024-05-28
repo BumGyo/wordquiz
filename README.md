@@ -71,7 +71,13 @@ This project was developed for learning purposes, and it was made to make studyi
 
 6. **Program exit:**
    ```
-   exit
+   *** Word Quiz ***
+
+   1. List all wordbooks
+   2. Show the words in a wordbook
+   3. Test with a wordbook
+   4. Exit
+   > 4
    ```
 
 ### Screenshots
