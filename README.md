@@ -55,13 +55,13 @@ This project was developed for learning purposes, and it was made to make studyi
    ---
    ```
 
-5. **Test with a wrodbook:**
+5. **Test with a wordbook:**
    ```
    Type in the name of the Wordbook?
    > voca1 or other wordbook
 
    -----
-   Which type of thest do you want to take?
+   Which type of test do you want to take?
    1. Word -> Meaning
    2. Meaning -> Word
    > 1 or 2
