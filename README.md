@@ -1,3 +1,4 @@
+<a name="top"></a>
 <div align="center">
   
 # WordQuiz
@@ -94,10 +95,10 @@ Hope you enjoy 👍
 A number between 1 and 4 selects all menu selections.   
 For a workbook, you can choose the name of the wordbook.   
    
-`1. List all wordbooks`: Show all the wordbooks in `/wordbooks/`.   
-`2. Show the words in a wordbook`: Pick a wordbook and look at the words and meanings.   
-`3. Test with a wordbook`: Pick a wordbook and take a test. When all the questions are finished, the score is output.   
-`4. Exit`: End the program.   
+- `1. List all wordbooks`: Show all the wordbooks in `/wordbooks/`.   
+- `2. Show the words in a wordbook`: Pick a wordbook and look at the words and meanings.   
+- `3. Test with a wordbook`: Pick a wordbook and take a test. When all the questions are finished, the score is output.   
+- `4. Exit`: End the program.   
 
 ### Screenshots
 - **Main Menu:**   
@@ -116,5 +117,7 @@ For a workbook, you can choose the name of the wordbook.
 - **Organization:** Department of Software, Chungbuk National University
 
 ## License
+
+[to the top](#top)
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
