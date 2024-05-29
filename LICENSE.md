@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2024 Hyunbin Kim
+Copyright (c) 2024 Hyunbin Kim, Yeongwoo Jeon, Bumgyo Seo, Gunwoo Kim
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
